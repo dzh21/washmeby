@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'leaflet',
+    'wash',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -125,3 +127,12 @@ STATIC_ROOT = 'static'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'washmeby/static'),
 )
+
+
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (53.9024, 27.5517),
+    'DEFAULT_ZOOM': 11,
+    'MIN_ZOOM': 3,
+    'MAX_ZOOM': 18,
+    'TILES': 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+}
