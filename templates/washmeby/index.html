@@ -1,4 +1,85 @@
 {% extends "base.html" %}
+{% load leaflet_tags %}
 {% block head_title %}
     Washme
-{% endblock %}
+{% endblock head_title %}
+{% block static %}
+    {{ block.super }}
+    {% leaflet_js %}
+    {% leaflet_css %}
+{% endblock static %}
+        
+{% block content %}
+          <!-- Example row of columns -->        
+      <div class="row">
+        <div class="col-md-5">
+          <h2>Где помыться?</h2>
+              <p>
+              <table class="table">
+                 <tbody>
+                    {% for carwash in carwashes %}
+                    <tr> 
+                        <th scope="row">{{ forloop.counter }}</th> <td>{{ carwash.address }}</td> <td>Otto</td> <td>@mdo</td> 
+                    </tr>     
+                    {% endfor %}     
+                </tbody> 
+              </table>
+              </p>                      
+        </div> 
+        <div class="col-md-7">
+            <h2></h2>
+            
+              <p>
+                {% leaflet_map "main_map" callback="main_map_init" %}
+
+                <script>
+                    function onEachFeature(feature, layer) {
+                        // does this feature have a property named popupContent?
+                        if (feature.properties && feature.properties.popupContent) {
+                            layer.bindPopup(feature.properties.name + '<br>' + feature.properties.popupContent);
+                        }
+                    }
+
+                  function main_map_init(map, options) {
+                    var geojsonFeatureCollection = {
+                        "type": "FeatureCollection",
+                        "features": [
+                            {
+                                "type": "Feature",
+                                "properties": {
+                                    "name": "Мойка А-100",                        
+                                    "popupContent": "Акции, скидки, время работы!"
+                                },
+                                "geometry": {
+                                    "type": "Point",
+                                    "coordinates": [27.615744, 53.832542]
+                                }
+                            },
+                            {
+                                "type": "Feature",
+                                "properties": {
+                                    "name": "Мойка Беларуснефть",
+                                    "popupContent": "Акции, скидки, время работы"
+                                },
+                                "geometry": {
+                                    "type": "Point",
+                                    "coordinates": [27.661102, 53.838075]
+                                }
+                            }
+                        ]               
+                    };
+
+
+                    L.geoJson(geojsonFeatureCollection, {
+                        pointToLayer: function (feature, latlng) {
+                            return L.marker(latlng);
+                        },
+                        onEachFeature: onEachFeature
+                    }).addTo(map);  
+                  }
+                </script>
+              </p>          
+          
+        </div>     
+      </div>
+{% endblock content %}
