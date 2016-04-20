@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from djgeojson.fields import PointField
 from django.db import models
 
 # Create your models here.
@@ -10,7 +11,14 @@ class CarWash(models.Model):
     # Busy
     # Price
     # Sale
-    # GeoPoint
+    geom = PointField()
+
+    @property
+    def popupContent(self):
+        return '{}'.format(
+            self.address
+        )
+
     def __unicode__(self):
         return self.address
     

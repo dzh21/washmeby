@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load leaflet_tags %}
+{% load geojson_tags %}
 {% block head_title %}
     Washme
 {% endblock head_title %}
@@ -19,7 +20,9 @@
                  <tbody>
                     {% for carwash in carwashes %}
                     <tr> 
-                        <th scope="row">{{ forloop.counter }}</th> <td>{{ carwash.address }}</td> <td>Otto</td> <td>@mdo</td> 
+                        <th scope="row">{{ forloop.counter }}</th> 
+                        <td>{{ carwash.address }}</td> 
+                        <!--<td>{{ carwash.geom }}}</td>-->
                     </tr>     
                     {% endfor %}     
                 </tbody> 
@@ -34,49 +37,23 @@
 
                 <script>
                     function onEachFeature(feature, layer) {
-                        // does this feature have a property named popupContent?
                         if (feature.properties && feature.properties.popupContent) {
-                            layer.bindPopup(feature.properties.name + '<br>' + feature.properties.popupContent);
+                            layer.bindPopup(feature.properties.popupContent);
                         }
                     }
 
-                  function main_map_init(map, options) {
-                    var geojsonFeatureCollection = {
-                        "type": "FeatureCollection",
-                        "features": [
-                            {
-                                "type": "Feature",
-                                "properties": {
-                                    "name": "Мойка А-100",                        
-                                    "popupContent": "Акции, скидки, время работы!"
-                                },
-                                "geometry": {
-                                    "type": "Point",
-                                    "coordinates": [27.615744, 53.832542]
-                                }
+                    function main_map_init(map, options) {
+                        var collection = {{ carwashes|geojsonfeature:"popupContent"|safe }};
+                        
+                        console.log(collection);
+
+                        L.geoJson(collection, {
+                            pointToLayer: function (feature, latlng) {
+                                return L.marker(latlng);
                             },
-                            {
-                                "type": "Feature",
-                                "properties": {
-                                    "name": "Мойка Беларуснефть",
-                                    "popupContent": "Акции, скидки, время работы"
-                                },
-                                "geometry": {
-                                    "type": "Point",
-                                    "coordinates": [27.661102, 53.838075]
-                                }
-                            }
-                        ]               
-                    };
-
-
-                    L.geoJson(geojsonFeatureCollection, {
-                        pointToLayer: function (feature, latlng) {
-                            return L.marker(latlng);
-                        },
-                        onEachFeature: onEachFeature
-                    }).addTo(map);  
-                  }
+                            onEachFeature: onEachFeature
+                        }).addTo(map);                      
+                    }
                 </script>
               </p>          
           
