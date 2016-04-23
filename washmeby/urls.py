@@ -16,10 +16,10 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from .views import home
+from carwash.views import index
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', home, name="home"),
+    url(r'^$', index, name="home"),
     #url(r'^', include('carwash.urls')),
 ]
