@@ -15,11 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-
+from django.contrib.auth import views as auth_views
 from carwash.views import index
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', index, name="home"),
-    #url(r'^', include('carwash.urls')),
+    url('^', include('django.contrib.auth.urls')),
 ]

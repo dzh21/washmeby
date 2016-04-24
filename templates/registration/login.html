@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+
+      <form class="form-signin" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+        {% csrf_token %}
+        <h2 class="form-signin-heading">Вход</h2>
+        <label for="id_username" class="sr-only">Имя</label>
+        <input type="text" name="username" id="id_username" class="form-control" placeholder="Имя" required="" autofocus="">
+        <label for="id_password" class="sr-only">Пароль</label>
+        <input type="password" id="id_password" class="form-control" placeholder="Пароль" required="">
+        
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <input type="hidden" name="next" value="{{ next }}" />
+      </form>
+
+{% endblock content %}
