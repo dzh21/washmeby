@@ -18,15 +18,18 @@
         {% endif %}
     {% endif %}
 
-      <form class="form-signin" method="post" action="{% url 'login' %}">
+      <form class="form-signin" method="post" action="{% url 'register' %}">
         {% csrf_token %}
-        <h2 class="form-signin-heading">Вход</h2>
+        <h2 class="form-signin-heading">Регистрация</h2>
+        {{ form.as_p }}
+        
+        <!--
         <label for="id_username" class="sr-only">Имя</label>
         <input type="text" name="username" id="id_username" class="form-control" placeholder="Имя" required="" autofocus="">
         <label for="id_password" class="sr-only">Пароль</label>
         <input type="password" name="password" id="id_password" class="form-control" placeholder="Пароль" required="">
-        
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+        -->
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Зарегистрироваться</button>
         <input type="hidden" name="next" value="" />
       </form>
     </div>

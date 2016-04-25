@@ -138,3 +138,6 @@ LEAFLET_CONFIG = {
     'MAX_ZOOM': 18,
     'TILES': 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
 }
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/login/'
