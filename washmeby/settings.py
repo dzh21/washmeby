@@ -140,4 +140,4 @@ LEAFLET_CONFIG = {
 }
 
 LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/login/'
+LOGIN_URL = '/userauth/login/'

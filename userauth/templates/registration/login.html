@@ -6,21 +6,12 @@
     <div class="col-md-3 col-md-offset-4">
 
     {% if form.errors %}
-    {{ form.errors }}<p>Your username and password didn't match. Please try again.</p>
+    {{ form.errors }}
     {% endif %}
 
-    {% if next %}
-        {% if user.is_authenticated %}
-        <p>Your account doesn't have access to this page. To proceed,
-        please login with an account that has access.</p>
-        {% else %}
-        <p>Please login to see this page.</p>
-        {% endif %}
-    {% endif %}
-
-      <form class="form-signin" method="post" action="{% url 'login' %}">
+      <form class="form-auth" method="post" action="{% url 'login' %}">
         {% csrf_token %}
-        <h2 class="form-signin-heading">Вход</h2>
+        <h2 class="form-auth-heading">Вход</h2>
         <label for="id_username" class="sr-only">Имя</label>
         <input type="text" name="username" id="id_username" class="form-control" placeholder="Имя" required="" autofocus="">
         <label for="id_password" class="sr-only">Пароль</label>

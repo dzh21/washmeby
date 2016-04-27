@@ -2,8 +2,9 @@ from __future__ import unicode_literals
 
 from djgeojson.fields import PointField
 from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
+
 class CarWash(models.Model):
 	# Address
     address = models.CharField(max_length=255)
@@ -12,6 +13,7 @@ class CarWash(models.Model):
     # Price
     # Sale
     geom = PointField()
+    fk_owner = models.ForeignKey(User)
 
     @property
     def popupContent(self):

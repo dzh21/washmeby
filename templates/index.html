@@ -18,13 +18,15 @@
               <p>
               <table class="table">
                  <tbody>
+                 
                     {% for carwash in carwashes %}
                     <tr> 
                         <th scope="row">{{ forloop.counter }}</th> 
                         <td>{{ carwash.address }}</td> 
-                        <!--<td>{{ carwash.geom }}}</td>-->
+                        
                     </tr>     
                     {% endfor %}     
+                 
                 </tbody> 
               </table>
               </p>                      

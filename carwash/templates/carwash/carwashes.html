@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row">
+
+    <div class="col-md-12">
+          <h2>Мои мойки</h2><a href="{% url 'carwashes_new' %}">добавить</a>
+              <p>
+              <table class="table">
+                 <tbody>
+                                    
+                    {% for carwash in carwashes %}
+                    <tr> 
+                        <th scope="row">{{ forloop.counter }}</th> 
+                        <td>{{ carwash.address }}</td> 
+                        <td>{{ carwash.geom }}</td>
+                        <td><a href="{% url 'carwashes_del' pk=carwash.id %}">удалить</a></td>
+                        <td><a href="{% url 'carwashes_edit' pk=carwash.id %}">изменить</a></td>
+                        
+                    </tr>     
+                    {% endfor %}     
+                </tbody> 
+              </table>
+              </p>                      
+    </div> 
+    
+</div>
+
+{% endblock content %}
