@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load leaflet_tags %}
+{% load geojson_tags %}
+
+{% block static %}
+    {{ block.super }}
+    {% leaflet_js %}
+    {% leaflet_css %}
+{% endblock static %}
+
+{% block content %}
+          <!-- Example row of columns -->        
+      <div class="row">
+        <div class="col-md-5">
+
+    {% if form.errors %}
+    {{ form.errors }}
+    {% endif %}
+
+    <form class="form-auth" method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}        
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Сохранить</button>
+        <input type="hidden" name="next" value="{% url 'carwashes_list' %}" />
+    </form>
+    <!--
+      <form class="form-auth" method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        <h2 class="form-auth-heading">Вход</h2>
+        <label for="id_username" class="sr-only">Имя</label>
+        <input type="text" name="username" id="id_username" class="form-control" placeholder="Имя" required="" autofocus="">
+        <label for="id_password" class="sr-only">Пароль</label>
+        <input type="password" name="password" id="id_password" class="form-control" placeholder="Пароль" required="">
+        
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+        <input type="hidden" name="next" value="" />
+      </form>
+    -->
+        </div> 
+        <div class="col-md-7">
+            <h2></h2>
+            
+              <p>
+                {% leaflet_map "main_map" callback="main_map_init" %}
+
+                <script>  
+
+                    function main_map_init(map, options) {
+                        var geoJsonPoint = $('#id_geom').val(); 
+                        
+                        if (!geoJsonPoint)
+                        {
+                            // Minsk default                            
+                            geoJsonPoint = '{"type":"Point","coordinates":[27.559075355529785,53.90054554327604]}';
+                        }                     
+
+                        var collection = JSON.parse(geoJsonPoint);
+                        
+                        map.panTo( {
+                            lat: collection["coordinates"][1], 
+                            lng: collection["coordinates"][0]
+                        });
+                        //coordsToLatLng(collection)                        
+
+                        var marker;
+                        L.geoJson(collection, {
+                            pointToLayer: function (feature, latlng) {
+                                marker = L.marker(latlng, {draggable: true});
+                                return marker;
+                            }
+                        }).addTo(map);                      
+                    
+                        function onMapClick(e) {                                                
+                            //$('#coordinates').val(lng + ',' + lat)          
+                            
+                            marker.setLatLng(e.latlng);
+                            marker.update();
+                            //console.log(marker.getLatLng());
+                            //console.log(marker.toGeoJSON().geometry);
+                            $('#id_geom').val(JSON.stringify(marker.toGeoJSON().geometry));
+                        }
+
+                        // call the onMapClick function when user click on map
+                        map.on('click', onMapClick);
+                    }
+
+                                        
+                </script>
+              </p>          
+          
+        </div>     
+      </div>
+{% endblock content %}

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, DeleteView, UpdateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin 
+from leaflet.forms.widgets import LeafletWidget
 from .models import CarWash
 
 
@@ -39,6 +40,8 @@ class OwnersWashesUpdateView(LoginRequiredMixin, UpdateView):
     redirect_field_name = 'next'
 
     model = CarWash
+    success_url = '/carwashes/'
+    fields = ['address', 'geom']
     
 
 class OwnersWashesCreateView(LoginRequiredMixin, CreateView):
@@ -46,3 +49,11 @@ class OwnersWashesCreateView(LoginRequiredMixin, CreateView):
     redirect_field_name = 'next'
 
     model = CarWash
+    success_url = '/carwashes/'
+    fields = ['address', 'geom']
+
+    def form_valid(self, form):
+        carwash = form.save(commit=False)
+        carwash.fk_owner = self.request.user
+        return super(OwnersWashesCreateView, self).form_valid(form)
+        

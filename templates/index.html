@@ -51,7 +51,7 @@
 
                         L.geoJson(collection, {
                             pointToLayer: function (feature, latlng) {
-                                return L.marker(latlng, {color: 'red'});
+                                return L.marker(latlng);
                             },
                             onEachFeature: onEachFeature
                         }).addTo(map);                      
