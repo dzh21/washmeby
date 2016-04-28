@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.core.urlresolvers import reverse_lazy
 from django.views.generic import TemplateView, DeleteView, UpdateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin 
 from leaflet.forms.widgets import LeafletWidget
@@ -33,6 +33,7 @@ class OwnersWashesDeleteView(LoginRequiredMixin, DeleteView):
     redirect_field_name = 'next'
 
     model = CarWash
+    success_url = reverse_lazy('carwashes_list')
 
  
 class OwnersWashesUpdateView(LoginRequiredMixin, UpdateView):
@@ -40,7 +41,7 @@ class OwnersWashesUpdateView(LoginRequiredMixin, UpdateView):
     redirect_field_name = 'next'
 
     model = CarWash
-    success_url = '/carwashes/'
+    success_url = reverse_lazy('carwashes_list')
     fields = ['address', 'geom']
     
 
@@ -49,7 +50,7 @@ class OwnersWashesCreateView(LoginRequiredMixin, CreateView):
     redirect_field_name = 'next'
 
     model = CarWash
-    success_url = '/carwashes/'
+    success_url = reverse_lazy('carwashes_list')
     fields = ['address', 'geom']
 
     def form_valid(self, form):

@@ -19,23 +19,15 @@
 
     <form class="form-auth" method="post" action="">
         {% csrf_token %}
-        {{ form.as_p }}        
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Сохранить</button>
+        <h2 class="form-auth-heading">Редактировать</h2>
+        <label for="id_address" for="id_address">Адрес:</label>
+        <input id="id_address" placeholder="Адрес" class="form-control" maxlength="255" name="address" type="text" value="{{ form.address.value }}">
+        <textarea id="id_geom" class="hide" name="geom">{{ form.geom.value }}</textarea>
+        <button class="btn btn-default" type="submit">Сохранить</button>
+        <a href="{% url 'carwashes_list' %}" class="btn btn-default">Отмена</a>
         <input type="hidden" name="next" value="{% url 'carwashes_list' %}" />
     </form>
-    <!--
-      <form class="form-auth" method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        <h2 class="form-auth-heading">Вход</h2>
-        <label for="id_username" class="sr-only">Имя</label>
-        <input type="text" name="username" id="id_username" class="form-control" placeholder="Имя" required="" autofocus="">
-        <label for="id_password" class="sr-only">Пароль</label>
-        <input type="password" name="password" id="id_password" class="form-control" placeholder="Пароль" required="">
-        
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
-        <input type="hidden" name="next" value="" />
-      </form>
-    -->
+    
         </div> 
         <div class="col-md-7">
             <h2></h2>
