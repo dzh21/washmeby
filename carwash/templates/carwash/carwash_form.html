@@ -18,8 +18,8 @@
     {% endif %}
 
     <form class="form-auth" method="post" action="">
-        {% csrf_token %}
-        <h2 class="form-auth-heading">Редактировать</h2>
+        {% csrf_token %}        
+        <h2 class="form-auth-heading">Мойка</h2>
         <label for="id_address" for="id_address">Адрес:</label>
         <input id="id_address" placeholder="Адрес" class="form-control" maxlength="255" name="address" type="text" value="{{ form.address.value }}">
         <textarea id="id_geom" class="hide" name="geom">{{ form.geom.value }}</textarea>
