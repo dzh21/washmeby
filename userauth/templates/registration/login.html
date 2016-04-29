@@ -4,12 +4,12 @@
 <div class="row">
 
     <div class="col-md-3 col-md-offset-4">
-
-    {% if form.errors %}
-    <div class="alert alert-danger" role="alert">        
-        Проверьте данные!
-    </div>
-    {% endif %}
+    <p>
+        {% if form.errors %}
+        <div class="alert alert-danger" role="alert">        
+            Проверьте данные!
+        </div>
+        {% endif %}
 
       <form class="form-auth" method="post" action="{% url 'login' %}">
         {% csrf_token %}
@@ -22,6 +22,7 @@
         <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
         <input type="hidden" name="next" value="" />
       </form>
+    </p>    
     </div>
 
 </div>
