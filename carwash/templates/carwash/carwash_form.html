@@ -9,28 +9,45 @@
 {% endblock static %}
 
 {% block content %}
-          <!-- Example row of columns -->        
+       
       <div class="row">
         <div class="col-md-5">
+        <p>
+        {% if form.errors %}
+        <div class="alert alert-danger" role="alert">        
+            Проверьте данные!
+            <ul>
+            <li>Поле "Адрес" является обязательным.</li>
+            <li>Координаты объекта необходимо отметить на карте.</li>
+            </ul>
+        </div>
+        {% endif %}    
 
-    {% if form.errors %}
-    {{ form.errors }}
-    {% endif %}
-
-    <form class="form-auth" method="post" action="">
-        {% csrf_token %}        
-        <h2 class="form-auth-heading">Мойка</h2>
-        <label for="id_address" for="id_address">Адрес:</label>
-        <input id="id_address" placeholder="Адрес" class="form-control" maxlength="255" name="address" type="text" value="{{ form.address.value }}">
-        <textarea id="id_geom" class="hide" name="geom">{{ form.geom.value }}</textarea>
-        <button class="btn btn-default" type="submit">Сохранить</button>
-        <a href="{% url 'carwashes_list' %}" class="btn btn-default">Отмена</a>
-        <input type="hidden" name="next" value="{% url 'carwashes_list' %}" />
-    </form>
-    
+        <form class="form-horizontal" method="post" action="">
+            {% csrf_token %}                
+            <div class="form-group">
+                <label for="id_address" class="col-sm-2 control-label">Адрес</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="id_address" placeholder="Адрес" value="{{ form.address.value }}" name="address">
+                </div>
+            </div>
+            
+            <textarea id="id_geom" class="hide" name="geom">{{ form.geom.value }}</textarea>
+            
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button class="btn btn-default" type="submit">Сохранить</button>
+                  <a href="{% url 'carwashes_list' %}" class="btn btn-default">Отмена</a>
+                </div>
+            </div>
+                        
+            <input type="hidden" name="next" value="{% url 'carwashes_list' %}" />
+        </form>
+        </p>
         </div> 
+
         <div class="col-md-7">
-            <h2></h2>
+            
             
               <p>
                 {% leaflet_map "main_map" callback="main_map_init" %}
@@ -39,13 +56,14 @@
 
                     function main_map_init(map, options) {
                         var geoJsonPoint = $('#id_geom').val(); 
-                        
-                        if (!geoJsonPoint)
+                        //console.log(geoJsonPoint);
+                        if (geoJsonPoint == 'None')
                         {
                             // Minsk default                            
                             geoJsonPoint = '{"type":"Point","coordinates":[27.559075355529785,53.90054554327604]}';
+                            //console.log(geoJsonPoint);
                         }                     
-
+                        //console.log(geoJsonPoint);
                         var collection = JSON.parse(geoJsonPoint);
                         
                         map.panTo( {

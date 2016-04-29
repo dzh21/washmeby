@@ -6,7 +6,9 @@
     <div class="col-md-3 col-md-offset-4">
 
     {% if form.errors %}
-    {{ form.errors }}
+    <div class="alert alert-danger" role="alert">        
+        Проверьте данные!
+    </div>
     {% endif %}
 
       <form class="form-auth" method="post" action="{% url 'login' %}">

@@ -10,7 +10,7 @@ class CarWash(models.Model):
     address = models.CharField(max_length=255)
     # Work time
     # Busy
-    workload = models.BooleanField()
+    workload = models.BooleanField(default=False)
     # Price
     # Sale
     geom = PointField()

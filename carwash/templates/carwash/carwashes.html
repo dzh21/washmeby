@@ -1,19 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h2>Мои мойки</h2><a href="{% url 'carwashes_new' %}"  class="btn btn-default">добавить</a>
-
-{% for carwash in carwashes %}
 <div class="row">
-    <div class="col-md-8">
-      {{ forloop.counter }} {{ carwash.address }} {{ carwash.geom }} 
-    </div>
-    <div class="col-md-4">
-      <a href="{% url 'carwashes_del' pk=carwash.id %}" class="btn btn-default">удалить</a>
-      <a href="{% url 'carwashes_edit' pk=carwash.id %}"  class="btn btn-default">изменить</a>
+    <div class="col-md-12">
+        <h2>Мои мойки</h2>
+        <p><a href="{% url 'carwashes_new' %}"  class="btn btn-default">добавить</a></p>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+          {% for carwash in carwashes %}
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{ forloop.counter }}" aria-expanded="true" aria-controls="collapseOne">
+                  {{ carwash.address }}                  
+                </a>
+              </h4>
+            </div>
+            <div id="collapse{{ forloop.counter }}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+              <div class="panel-body">
+                <div class="col-sm-8">
+                    {{ carwash.geom }}
+                </div>
+                <div class="col-sm-2">
+                    <a href="{% url 'carwashes_del' pk=carwash.id %}" class="btn btn-default">удалить</a>
+                    <a href="{% url 'carwashes_edit' pk=carwash.id %}"  class="btn btn-default">изменить</a>    
+                </div>                
+              </div>
+            </div>
+          </div>
+          {% endfor %} 
+        </div>
     </div>
 </div>
-{% endfor %}
-
 
 {% endblock content %}
